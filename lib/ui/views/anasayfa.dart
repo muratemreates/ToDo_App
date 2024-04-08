@@ -17,7 +17,6 @@ class _AnasayfaState extends State<Anasayfa> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<AnasayfaCubit>().toDoYukle();
   }
@@ -25,6 +24,7 @@ class _AnasayfaState extends State<Anasayfa> {
   @override
   Widget build(BuildContext context) {
     var genislik = MediaQuery.of(context).size.width;
+    var yukseklik = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
@@ -71,36 +71,37 @@ class _AnasayfaState extends State<Anasayfa> {
                       context.read<AnasayfaCubit>().toDoYukle();
                     });
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8),
-                    child: Card(
-                      child: SizedBox(
-                        height: 100,
-                        width: genislik / 2,
-                        child: Row(
-                          children: [
-                            Text(
+                  child: Card(
+                    color: Colors.blue[200],
+                    child: SizedBox(
+                      height: yukseklik * 0.13,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
                               toDo.name,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
                               style: TextStyle(fontSize: genislik * 0.03),
                             ),
-                            const Spacer(),
-                            IconButton(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text("${toDo.name} silinsin mi"),
-                                    action: SnackBarAction(
-                                        label: "Evet",
-                                        onPressed: () {
-                                          context
-                                              .read<AnasayfaCubit>()
-                                              .sil(toDo.id);
-                                        }),
-                                  ));
-                                },
-                                icon: const Icon(Icons.clear))
-                          ],
-                        ),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                              onPressed: () {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text("${toDo.name} silinsin mi"),
+                                  action: SnackBarAction(
+                                      label: "Evet",
+                                      onPressed: () {
+                                        context
+                                            .read<AnasayfaCubit>()
+                                            .sil(toDo.id);
+                                      }),
+                                ));
+                              },
+                              icon: const Icon(Icons.clear))
+                        ],
                       ),
                     ),
                   ),

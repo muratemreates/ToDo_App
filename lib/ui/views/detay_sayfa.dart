@@ -18,45 +18,49 @@ class _DetaySayfaState extends State<DetaySayfa> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      //resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Detay Sayfa"),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 50.0, right: 50),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  tfToDo.text = widget.yapilacak.name;
-                },
-                child: Text(
-                  widget.yapilacak.name,
-                  style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
-                ),
-              ),
-              TextField(
-                controller: tfToDo,
-                decoration:
-                    const InputDecoration(hintText: "Yapılacak şeyi yazınız.."),
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    context
-                        .read<DetaySayfaCubit>()
-                        .guncelle(widget.yapilacak.id, tfToDo.text);
-                    setState(() {
-                      widget.yapilacak.name = tfToDo.text;
-                    });
-                    print("Güncellendi...");
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 50.0, right: 50),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    tfToDo.text = widget.yapilacak.name;
                   },
-                  child: const Text("Güncelle")),
-            ],
+                  child: Text(
+                    widget.yapilacak.name,
+                    style: const TextStyle(
+                        fontSize: 25, fontWeight: FontWeight.w400),
+                  ),
+                ),
+                TextField(
+                  controller: tfToDo,
+                  decoration: const InputDecoration(
+                      hintText: "Yapılacak şeyi yazınız.."),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+      floatingActionButton: ElevatedButton(
+          onPressed: () {
+            context
+                .read<DetaySayfaCubit>()
+                .guncelle(widget.yapilacak.id, tfToDo.text);
+            setState(() {
+              widget.yapilacak.name = tfToDo.text;
+            });
+            print("Güncellendi...");
+            tfToDo.text = "";
+          },
+          child: const Text("Güncelle")),
     );
   }
 }

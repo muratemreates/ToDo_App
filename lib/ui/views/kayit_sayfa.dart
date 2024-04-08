@@ -15,7 +15,6 @@ class _KayitSayfaState extends State<KayitSayfa> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text("Ekle")),
       body: Center(
         child: Padding(
@@ -25,30 +24,28 @@ class _KayitSayfaState extends State<KayitSayfa> {
             children: [
               Text(
                 yazi,
+                style: const TextStyle(fontSize: 25),
               ),
               TextField(
                 controller: tfToDo,
                 decoration: const InputDecoration(
                     hintText: "Yapılacak bir şey yazın.."),
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    context
-                        .read<KayitSayfaCubit>()
-                        .kaydet(tfToDo.text)
-                        .then((value) {
-                      print("Anasayfaya dönüldü");
-                      print(" TO DO Eklendi");
-                      setState(() {
-                        yazi = tfToDo.text;
-                      });
-                    });
-                  },
-                  child: const Text("Ekle")),
             ],
           ),
         ),
       ),
+      floatingActionButton: ElevatedButton(
+          onPressed: () {
+            context.read<KayitSayfaCubit>().kaydet(tfToDo.text).then((value) {
+              print("Anasayfaya dönüldü");
+              print(" TO DO Eklendi");
+              setState(() {
+                yazi = tfToDo.text;
+              });
+            });
+          },
+          child: const Text("Ekle")),
     );
   }
 }
